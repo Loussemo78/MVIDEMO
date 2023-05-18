@@ -21,4 +21,32 @@ class MyViewModel : ViewModel() {
     private val _state = MutableLiveData<MyState>()
     val state: LiveData<MyState> get() = _state
 
+    fun consumeIntent(intent: MyIntent) {
+        when (intent) {
+            is MyIntent.Initial -> {
+                // Effectuer des actions initiales (chargement initial des données, etc.)
+                _state.value = MyState.Loading
+                simulateDataLoading()
+            }
+            is MyIntent.UpdateText -> {
+                // Mettre à jour le modèle avec le nouveau texte
+                _state.value = MyState.Success(MyModel(intent.newText))
+            }
+        }
+    }
+
+    private fun simulateDataLoading() {
+        // Simuler un chargement asynchrone des données
+        // Après le chargement, mettre à jour le modèle avec les données réussies ou une erreur
+        val success = (0..1).random() == 0 // Simule une réussite aléatoire
+        if (success) {
+            val newText = "Données chargées avec succès"
+            _state.value = MyState.Success(MyModel(newText))
+        } else {
+            val errorMessage = "Échec du chargement des données"
+            _state.value = MyState.Error(errorMessage)
+        }
+    }
+
+
 }
