@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MVIDEMO</string>
+    <string name="textview">TextView</string>
+    <string name="update">Update</string>
 </resources>
